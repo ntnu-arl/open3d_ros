@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>open3d_ros</name>
+  <version>0.0.0</version>
+  <description>ROS interface for open3d</description>
+
+  <maintainer email="nkhedekar@nevada.unr.edu">Nikhil Khedekar</maintainer>
+
+  <license>MIT</license>
+
+  <author email="nkhedekar@nevada.unr.edu">Nikhil Khedekar</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>python-open3d-pip</exec_depend>
+  <exec_depend>python-numpy</exec_depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
