@@ -6,6 +6,11 @@ fields_xyz = [PointField(name='x', offset=0, datatype=7, count=1),
               PointField(name='y', offset=4, datatype=7, count=1),
               PointField(name='z', offset=8, datatype=7, count=1)]
 
+fields_xyzrgb = [PointField(name='x', offset=0, datatype=7, count=1),
+               PointField(name='y', offset=4, datatype=7, count=1),
+               PointField(name='z', offset=8, datatype=7, count=1),
+               PointField(name='rgb', offset=16, datatype=7, count=1)]
+
 fields_xyzi = [PointField(name='x', offset=0, datatype=7, count=1),
                PointField(name='y', offset=4, datatype=7, count=1),
                PointField(name='z', offset=8, datatype=7, count=1),

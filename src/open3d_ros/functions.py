@@ -21,6 +21,15 @@ def float_to_rgb(f):
     return color
 
 
+def rgb_to_float(color):
+    hex_r = (0xff & color[0]) << 16
+    hex_g = (0xff & color[1]) << 8
+    hex_b = (0xff & color[2])
+    hex_rgb = hex_r | hex_g | hex_b
+    float_rgb = struct.unpack('f', struct.pack('i', hex_rgb))[0]
+    return float_rgb
+
+
 def ros_to_o3d(ros_pc2):
     points = np.array(list(read_points(ros_pc2)))
     field_names = [field.name for field in ros_pc2.fields]
@@ -47,4 +56,10 @@ def o3d_to_ros(o3d_pc, frame_id='open3d_pointcloud'):
     header = Header()
     header.frame_id = frame_id
     points = np.asarray(o3d_pc.points)
-    return create_cloud(header, fields_xyz, points)
+    if o3d_pc.has_colors():
+        colors = (np.asarray(o3d_pc.colors) * 255).astype(int)
+        colors = np.array([rgb_to_float(i) for i in colors])
+        cloud_data = np.c_[points, colors]
+        return create_cloud(header, fields_xyzrgb, cloud_data)
+    else:
+        return create_cloud(header, fields_xyz, points)
