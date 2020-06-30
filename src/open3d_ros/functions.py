@@ -31,7 +31,7 @@ def rgb_to_float(color):
 
 
 def ros_to_o3d(ros_pc2):
-    points = np.array(list(read_points(ros_pc2)))
+    points = np.array(list(read_points(ros_pc2)))  # 78 ms
     field_names = [field.name for field in ros_pc2.fields]
     o3d_pc = o3d.geometry.PointCloud()
     if len(points) == 0:
@@ -39,9 +39,10 @@ def ros_to_o3d(ros_pc2):
         return o3d_pc
     if 'rgb' in field_names:
         xyz = points[:, :3]
-        rgb = [float_to_rgb(f) for f in points[:, 3]]
+        rgb = [float_to_rgb(f) for f in points[:, 3]]  # 136 ms
         o3d_pc.points = o3d.utility.Vector3dVector(np.array(xyz))
-        o3d_pc.colors = o3d.utility.Vector3dVector(np.array(rgb)/255.0)
+        o3d_pc.colors = o3d.utility.Vector3dVector(
+            np.array(rgb)/255.0)  # 40 ms
         return o3d_pc
     elif 'intensity' in field_names:
         if 'ring' in field_names:
@@ -58,8 +59,9 @@ def o3d_to_ros(o3d_pc, frame_id='open3d_pointcloud'):
     points = np.asarray(o3d_pc.points)
     if o3d_pc.has_colors():
         colors = (np.asarray(o3d_pc.colors) * 255).astype(int)
-        colors = np.array([rgb_to_float(i) for i in colors])
+        colors = np.array([rgb_to_float(i) for i in colors])  # 132 ms
         cloud_data = np.c_[points, colors]
-        return create_cloud(header, fields_xyzrgb, cloud_data)
+        a = create_cloud(header, fields_xyzrgb, cloud_data)  # 100 ms
+        return a
     else:
         return create_cloud(header, fields_xyz, points)
