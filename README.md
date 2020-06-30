@@ -13,6 +13,6 @@ ros_to_o3d(ros_pc2)
 o3d_to_ros(o3d_pc)
 ```
 
-## Note: This interface currently only supports XYZI and XYZIR
+## Note: This interface currently only supports XYZI, XYZIR and XYZRGB
 
 ## Note: On creating a ros pointcloud from an open3d pointcloud it is the user's responsibility to set the timestamp. It is also expected that you would need to pass in the frame id
