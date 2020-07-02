@@ -12,7 +12,7 @@ There are 2 major functions provided in this library:
 rospc_to_o3d(ros_pc2,o3d_pc)
 o3d_to_rospc(o3d_pc,ros_pc2,"frame_id")
 ```
-##Dependencies:
+Dependencies:
 <br>Eigen
 <br>Open3d
 
