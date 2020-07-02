@@ -8,11 +8,14 @@ This package is a standalone library that provides functions that can convert po
 
 There are 2 major functions provided in this library:
 
-```python
-ros_to_o3d(ros_pc2)
-o3d_to_ros(o3d_pc)
+```cpp
+rospc_to_o3d(ros_pc2,o3d_pc)
+o3d_to_rospc(o3d_pc,ros_pc2,"frame_id")
 ```
+####Dependencies:
+#####Eigen
+#####Open3d
 
-## Note: This interface currently only supports XYZI, XYZIR and XYZRGB
+## Note: This interface currently only supports XYZ and XYZRGB pointclouds
 
 ## Note: On creating a ros pointcloud from an open3d pointcloud it is the user's responsibility to set the timestamp. It is also expected that you would need to pass in the frame id
