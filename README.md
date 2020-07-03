@@ -35,5 +35,10 @@ sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
 sudo apt-get update
 sudo apt-get install cmake
 ```
-### Note: This interface currently only supports XYZ and XYZRGB pointclouds
+* Run ```catkin build``` in the root of your workspace. Ensure that all libraries including third-party libraries are in your ```include``` path.<br>
+If not, you may need to manually copy them. For example:
+```
+sudo cp -r <PATH_TO_OPEN3D_INSTALL_DIR>/include/Open3D/3rdparty/* /usr/include/
+```
+### Note: interface currently only supports XYZ and XYZRGB pointclouds
 ### Note: On creating a ros pointcloud from an open3d pointcloud it is the user's responsibility to set the timestamp. It is also expected that you would need to pass in the frame id
