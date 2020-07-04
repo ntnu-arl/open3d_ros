@@ -8,8 +8,8 @@ This package is a standalone library that provides functions that can convert po
 There are two major functions provided in this library:
 
 ```cpp
-void rospc_to_o3d(ros_pc2,o3d_pc);
-void o3d_to_rospc(o3d_pc,ros_pc2,frame_id);
+void ros_to_o3d(ros_pc2, o3d_pc);
+void o3d_to_ros(o3d_pc, ros_pc2, frame_id, stamp);
 ```
 ## Dependencies:
 * Eigen3<br>
