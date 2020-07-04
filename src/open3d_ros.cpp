@@ -6,88 +6,85 @@
 
 namespace open3d_ros
 {
-void o3d_to_rospc(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2,
-                  std::string frame_id)
+void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id,
+                ros::Time stamp)
 {
-  ROS_INFO("Converting from o3d to ros");
-  sensor_msgs::PointCloud2Modifier modifier(ros_pc2);
-  if (pointcloud.HasColors())
-  {
-    modifier.setPointCloud2FieldsByString(2, "xyz", "rgb");
-  }
-  else
-  {
-    modifier.setPointCloud2FieldsByString(1, "xyz", "rgb");
-  }
-  modifier.resize(pointcloud.points_.size());
-  ros_pc2.header.frame_id = frame_id;
-  ros_pc2.height = 1;
-  ros_pc2.header.stamp = ros::Time::now();
-  sensor_msgs::PointCloud2Iterator<float> ros_pc2_x(ros_pc2, "x");
-  sensor_msgs::PointCloud2Iterator<float> ros_pc2_y(ros_pc2, "y");
-  sensor_msgs::PointCloud2Iterator<float> ros_pc2_z(ros_pc2, "z");
-  if (pointcloud.HasColors())
-  {
-    sensor_msgs::PointCloud2Iterator<uint8_t> ros_pc2_r(ros_pc2, "r");
-    sensor_msgs::PointCloud2Iterator<uint8_t> ros_pc2_g(ros_pc2, "g");
-    sensor_msgs::PointCloud2Iterator<uint8_t> ros_pc2_b(ros_pc2, "b");
-    for (size_t i = 0; i < pointcloud.points_.size();
-         i++, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z, ++ros_pc2_r, ++ros_pc2_g, ++ros_pc2_b)
+    sensor_msgs::PointCloud2Modifier modifier(ros_pc2);
+    if (pointcloud.HasColors())
     {
-      const Eigen::Vector3d& point = pointcloud.points_[i];
-      const Eigen::Vector3d& color = pointcloud.colors_[i];
-      *ros_pc2_x = point(0);
-      *ros_pc2_y = point(1);
-      *ros_pc2_z = point(2);
-      *ros_pc2_r = (int)(255 * color(0));
-      *ros_pc2_g = (int)(255 * color(1));
-      *ros_pc2_b = (int)(255 * color(2));
+        modifier.setPointCloud2FieldsByString(2, "xyz", "rgb");
     }
-  }
-  else
-  {
-    for (size_t i = 0; i < pointcloud.points_.size(); i++, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
+    else
     {
-      const Eigen::Vector3d& point = pointcloud.points_[i];
-      *ros_pc2_x = point(0);
-      *ros_pc2_y = point(1);
-      *ros_pc2_z = point(2);
+        modifier.setPointCloud2FieldsByString(1, "xyz");
     }
-  }
+    modifier.resize(pointcloud.points_.size());
+    ros_pc2.header.frame_id = frame_id;
+    ros_pc2.header.stamp = stamp;
+    sensor_msgs::PointCloud2Iterator<float> ros_pc2_x(ros_pc2, "x");
+    sensor_msgs::PointCloud2Iterator<float> ros_pc2_y(ros_pc2, "y");
+    sensor_msgs::PointCloud2Iterator<float> ros_pc2_z(ros_pc2, "z");
+    if (pointcloud.HasColors())
+    {
+        sensor_msgs::PointCloud2Iterator<uint8_t> ros_pc2_r(ros_pc2, "r");
+        sensor_msgs::PointCloud2Iterator<uint8_t> ros_pc2_g(ros_pc2, "g");
+        sensor_msgs::PointCloud2Iterator<uint8_t> ros_pc2_b(ros_pc2, "b");
+        for (size_t i = 0; i < pointcloud.points_.size();
+             i++, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z, ++ros_pc2_r, ++ros_pc2_g, ++ros_pc2_b)
+        {
+            const Eigen::Vector3d& point = pointcloud.points_[i];
+            const Eigen::Vector3d& color = pointcloud.colors_[i];
+            *ros_pc2_x = point(0);
+            *ros_pc2_y = point(1);
+            *ros_pc2_z = point(2);
+            *ros_pc2_r = (int)(255 * color(0));
+            *ros_pc2_g = (int)(255 * color(1));
+            *ros_pc2_b = (int)(255 * color(2));
+        }
+    }
+    else
+    {
+        for (size_t i = 0; i < pointcloud.points_.size(); i++, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
+        {
+            const Eigen::Vector3d& point = pointcloud.points_[i];
+            *ros_pc2_x = point(0);
+            *ros_pc2_y = point(1);
+            *ros_pc2_z = point(2);
+        }
+    }
 }
 
-void rospc_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc)
+void ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc)
 {
-  ROS_INFO("Converting from ros to o3d");
-  sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_x(*ros_pc2, "x");
-  sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_y(*ros_pc2, "y");
-  sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_z(*ros_pc2, "z");
-  if (ros_pc2->fields.size() == 3)
-  {
-    for (size_t i = 0; i < ros_pc2->height * ros_pc2->width; ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
+    sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_x(*ros_pc2, "x");
+    sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_y(*ros_pc2, "y");
+    sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_z(*ros_pc2, "z");
+    if (ros_pc2->fields.size() == 3)
     {
-      o3d_pc.points_.push_back(Eigen::Vector3d(*ros_pc2_x, *ros_pc2_y, *ros_pc2_z));
+        for (size_t i = 0; i < ros_pc2->height * ros_pc2->width; ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
+        {
+            o3d_pc.points_.push_back(Eigen::Vector3d(*ros_pc2_x, *ros_pc2_y, *ros_pc2_z));
+        }
     }
-  }
-  else if (ros_pc2->fields[3].name == "rgb")
-  {
-    sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_r(*ros_pc2, "r");
-    sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_g(*ros_pc2, "g");
-    sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_b(*ros_pc2, "b");
-    for (size_t i = 0; i < ros_pc2->height * ros_pc2->width;
-         ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z, ++ros_pc2_r, ++ros_pc2_g, ++ros_pc2_b)
+    else if (ros_pc2->fields[3].name == "rgb")
     {
-      o3d_pc.points_.push_back(Eigen::Vector3d(*ros_pc2_x, *ros_pc2_y, *ros_pc2_z));
-      o3d_pc.colors_.push_back(Eigen::Vector3d((float)((int)(*ros_pc2_r)) / 255, (float)((int)(*ros_pc2_g)) / 255,
-                                               (float)((int)(*ros_pc2_b)) / 255));
+        sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_r(*ros_pc2, "r");
+        sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_g(*ros_pc2, "g");
+        sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_b(*ros_pc2, "b");
+        for (size_t i = 0; i < ros_pc2->height * ros_pc2->width;
+             ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z, ++ros_pc2_r, ++ros_pc2_g, ++ros_pc2_b)
+        {
+            o3d_pc.points_.push_back(Eigen::Vector3d(*ros_pc2_x, *ros_pc2_y, *ros_pc2_z));
+            o3d_pc.colors_.push_back(
+                Eigen::Vector3d(((int)(*ros_pc2_r)) / 255.0, ((int)(*ros_pc2_g)) / 255.0, ((int)(*ros_pc2_b)) / 255.0));
+        }
     }
-  }
-  else
-  {
-    for (size_t i = 0; i < ros_pc2->height * ros_pc2->width; ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
+    else
     {
-      o3d_pc.points_.push_back(Eigen::Vector3d(*ros_pc2_x, *ros_pc2_y, *ros_pc2_z));
+        for (size_t i = 0; i < ros_pc2->height * ros_pc2->width; ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
+        {
+            o3d_pc.points_.push_back(Eigen::Vector3d(*ros_pc2_x, *ros_pc2_y, *ros_pc2_z));
+        }
     }
-  }
 }
-}  // namespace open3d_ros
+}    // namespace open3d_ros
