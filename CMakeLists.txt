@@ -25,7 +25,7 @@ include_directories(${Open3D_LIBRARY_DIRS})
 
 catkin_package(
  INCLUDE_DIRS include
-#  LIBRARIES open3d_ros
+ LIBRARIES open3d_ros
 #  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs
 #  DEPENDS system_lib
 )
@@ -34,11 +34,10 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
-
-add_executable(o3d_test src/o3d_test.cpp)
-target_link_libraries(o3d_test ${catkin_LIBRARIES})
-target_link_libraries(o3d_test ${Open3D_LIBRARIES})
-target_include_directories(o3d_test PUBLIC ${Open3D_INCLUDE_DIRS})
+# catkin_add_gtest(o3d_test test/o3d_test.cpp)
+# target_link_libraries(o3d_test ${catkin_LIBRARIES}  ${GTEST_LIBRARIES})
+# target_link_libraries(o3d_test ${Open3D_LIBRARIES})
+# target_include_directories(o3d_test PUBLIC ${Open3D_INCLUDE_DIRS})
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
@@ -50,3 +49,9 @@ add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
+
+add_executable(example src/example.cpp)
+target_link_libraries(example ${catkin_LIBRARIES})
+target_link_libraries(example ${Open3D_LIBRARIES})
+target_link_libraries(example ${PROJECT_NAME})
+target_include_directories(example PUBLIC ${Open3D_INCLUDE_DIRS})
