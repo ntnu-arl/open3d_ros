@@ -6,11 +6,15 @@
 
 // ROS
 #include <sensor_msgs/PointCloud2.h>
+#include <sensor_msgs/point_cloud2_iterator.h>
+
+// C++
+#include <stdlib.h>
 
 namespace open3d_ros
 {
 void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2,
-                std::string frame_id = "open3d_pointcloud", ros::Time stamp = ros::Time::now());
+                std::string frame_id = "open3d_pointcloud");
 
 void ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc);
 }    // namespace open3d_ros

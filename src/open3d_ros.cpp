@@ -1,13 +1,8 @@
 #include "open3d_ros/open3d_ros.h"
-#include <ros/ros.h>
-#include <sensor_msgs/PointCloud2.h>
-#include <sensor_msgs/point_cloud2_iterator.h>
-#include <stdlib.h>
 
 namespace open3d_ros
 {
-void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id,
-                ros::Time stamp)
+void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id)
 {
     sensor_msgs::PointCloud2Modifier modifier(ros_pc2);
     if (pointcloud.HasColors())
@@ -20,7 +15,6 @@ void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::Poi
     }
     modifier.resize(pointcloud.points_.size());
     ros_pc2.header.frame_id = frame_id;
-    ros_pc2.header.stamp = stamp;
     sensor_msgs::PointCloud2Iterator<float> ros_pc2_x(ros_pc2, "x");
     sensor_msgs::PointCloud2Iterator<float> ros_pc2_y(ros_pc2, "y");
     sensor_msgs::PointCloud2Iterator<float> ros_pc2_z(ros_pc2, "z");
