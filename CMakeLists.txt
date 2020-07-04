@@ -44,11 +44,13 @@ target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
 
-add_executable(example src/example.cpp)
-target_link_libraries(example ${catkin_LIBRARIES})
-target_link_libraries(example ${Open3D_LIBRARIES})
-target_link_libraries(example ${PROJECT_NAME})
-target_include_directories(example PUBLIC ${Open3D_INCLUDE_DIRS})
+add_executable(subscriber_example examples/ex_pc2_subscribe.cpp)
+target_link_libraries(subscriber_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
+target_include_directories(subscriber_example PUBLIC ${Open3D_INCLUDE_DIRS})
+
+add_executable(publisher_example examples/ex_pcd_publish.cpp)
+target_link_libraries(publisher_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
+target_include_directories(publisher_example PUBLIC ${Open3D_INCLUDE_DIRS})
 
 catkin_add_gtest(o3d_ros_tests test/o3d_ros_tests.cpp)
 target_link_libraries(o3d_ros_tests ${PROJECT_NAME} ${catkin_LIBRARIES} ${Open3D_LIBRARIES})
