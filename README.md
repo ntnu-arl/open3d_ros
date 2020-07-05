@@ -63,3 +63,5 @@ Their usage can be seen in [`examples/ex_pc2_subscribe.cpp`](examples/ex_pc2_sub
 
 * As Open3D pointclouds only contain `points`, `colors` and `normals`, the interface currently only supports XYZ and XYZRGB pointclouds.
 * On creating a ROS pointcloud from an Open3D pointcloud it is the user's responsibility to set the timestamp in the header and pass the `frame_id` to the conversion function.
+
+Documentation can be generated using Doxygen and the configuration file by executing  ```doxygen Doxyfile```
