@@ -8,14 +8,14 @@
 // open3d_ros
 #include "open3d_ros/open3d_ros.h"
 
-void cloud_callback(const sensor_msgs::PointCloud2ConstPtr &cloud_data)
+void cloud_callback(const sensor_msgs::PointCloud2ConstPtr& cloud_data)
 {
     open3d::geometry::PointCloud pcd;
     open3d_ros::ros_to_o3d(cloud_data, pcd);
     // Do something with the Open3D pointcloud
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     ros::init(argc, argv, "open3d_ros_example_node");
     ros::NodeHandle nh;

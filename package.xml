@@ -4,12 +4,12 @@
   <version>0.0.0</version>
   <description>The open3d_ros package</description>
 
-  <maintainer email="matnay@todo.todo">Pranay Mathur</maintainer>
+  <maintainer email="matnay17@gmail.com">Pranay Mathur</maintainer>
   <maintainer email="nkhedekar@nevada.unr.edu">Nikhil Khedekar</maintainer>
 
   <license>MIT</license>
 
-  <author email="matnay@todo.todo">Pranay Mathur</author>
+  <author email="matnay17@gmail.com">Pranay Mathur</author>
   <author email="nkhedekar@nevada.unr.edu">Nikhil Khedekar</author>
 
   <buildtool_depend>catkin</buildtool_depend>

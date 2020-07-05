@@ -59,7 +59,7 @@ void open3d_ros::o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sens
 void open3d_ros::ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc);
 ```
 
-Their usage can be seen in [`src/example.cpp`](src/example.cpp)
+Their usage can be seen in [`examples/ex_pc2_subscribe.cpp`](examples/ex_pc2_subscribe.cpp) and [`examples/ex_pcd_publish.cpp`](examples/ex_pcd_publish.cpp)
 
 * As Open3D pointclouds only contain `points`, `colors` and `normals`, the interface currently only supports XYZ and XYZRGB pointclouds.
 * On creating a ROS pointcloud from an Open3D pointcloud it is the user's responsibility to set the timestamp in the header and pass the `frame_id` to the conversion function.
