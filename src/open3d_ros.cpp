@@ -53,6 +53,7 @@ void ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometr
     sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_x(*ros_pc2, "x");
     sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_y(*ros_pc2, "y");
     sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_z(*ros_pc2, "z");
+    o3d_pc.points_.reserve(ros_pc2->height * ros_pc2->width);
     if (ros_pc2->fields.size() == 3)
     {
         for (size_t i = 0; i < ros_pc2->height * ros_pc2->width; ++i, ++ros_pc2_x, ++ros_pc2_y, ++ros_pc2_z)
@@ -62,6 +63,7 @@ void ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometr
     }
     else if (ros_pc2->fields[3].name == "rgb")
     {
+        o3d_pc.colors_.reserve(ros_pc2->height * ros_pc2->width);
         sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_r(*ros_pc2, "r");
         sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_g(*ros_pc2, "g");
         sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_b(*ros_pc2, "b");
