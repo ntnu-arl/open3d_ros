@@ -22,19 +22,17 @@ int main(int argc, char** argv)
         open3d::geometry::PointCloud o3d_pc;
         open3d::io::ReadPointCloud("src/open3d_ros/data/fragment.pcd", o3d_pc);
         // Conversion time from Open3D PointCloud to sensor_msgs::PointCloud2
-        // auto start_o3d_ros = std::chrono::steady_clock::now();
         std::clock_t tic = std::clock();
         open3d_ros::o3d_to_ros(o3d_pc, ros_pc2, "o3d_frame");
-        std::cout << "Conversion time (o3d_to_ros) : "
-                  << float(std::clock() - tic) / CLOCKS_PER_SEC * 1000.0 << " ms"
+        std::cout << "Conversion time (o3d_to_ros) : " << float(std::clock() - tic) / CLOCKS_PER_SEC * 1000.0 << " ms"
                   << std::endl;
 
-        // Conversion time from sensor_msgs::PointCloud2 to Open3D PointCloud 
-        const sensor_msgs::PointCloud2ConstPtr &ros_pc2_ptr = boost::make_shared<sensor_msgs::PointCloud2>(ros_pc2);
+        // Conversion time from sensor_msgs::PointCloud2 to Open3D PointCloud
+        const sensor_msgs::PointCloud2ConstPtr& ros_pc2_ptr = boost::make_shared<sensor_msgs::PointCloud2>(ros_pc2);
         std::clock_t toc = std::clock();
         open3d_ros::ros_to_o3d(ros_pc2_ptr, test_o3d_pc);
-        std::cout << "Conversion time (ros_to_o3d) : "
-                  << float(std::clock() - toc) / CLOCKS_PER_SEC * 1000.0 << " ms \n"
+        std::cout << "Conversion time (ros_to_o3d) : " << float(std::clock() - toc) / CLOCKS_PER_SEC * 1000.0
+                  << " ms \n"
                   << std::endl;
 
         // Visualize result using RViz

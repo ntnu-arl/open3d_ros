@@ -56,7 +56,7 @@ There are two functions provided in this library:
 ```cpp
 void open3d_ros::o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id = "open3d_pointcloud");
 
-void open3d_ros::ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc);
+void open3d_ros::ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc,bool skip_colors=false);
 ```
 
 Their usage can be seen in [`examples/ex_pc2_subscribe.cpp`](examples/ex_pc2_subscribe.cpp) and [`examples/ex_pcd_publish.cpp`](examples/ex_pcd_publish.cpp)
