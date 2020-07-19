@@ -63,6 +63,7 @@ void ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometr
     }
     else
     {
+        o3d_pc.colors_.reserve(ros_pc2->height * ros_pc2->width);
         if (ros_pc2->fields[3].name == "rgb")
         {
             sensor_msgs::PointCloud2ConstIterator<uint8_t> ros_pc2_r(*ros_pc2, "r");
