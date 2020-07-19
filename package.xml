@@ -2,10 +2,13 @@
 <package format="2">
   <name>open3d_ros</name>
   <version>0.0.0</version>
-  <description>The open3d_ros package</description>
+  <description>A ROS interface to Open3D</description>
 
   <maintainer email="matnay17@gmail.com">Pranay Mathur</maintainer>
   <maintainer email="nkhedekar@nevada.unr.edu">Nikhil Khedekar</maintainer>
+
+  <url type="repository">https://github.com/unr-arl/open3d_ros</url>
+  <url type="bugtracker">https://github.com/unr-arl/open3d_ros/issues</url>
 
   <license>MIT</license>
 
