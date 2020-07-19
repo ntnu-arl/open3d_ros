@@ -8,8 +8,11 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/point_cloud2_iterator.h>
 
+// Eigen
+#include <Eigen/Dense>
+
 // C++
-#include <stdlib.h>
+#include <string>
 
 namespace open3d_ros
 {
