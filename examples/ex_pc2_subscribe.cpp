@@ -11,7 +11,7 @@
 void cloud_callback(const sensor_msgs::PointCloud2ConstPtr& cloud_data)
 {
     open3d::geometry::PointCloud pcd;
-    open3d_ros::ros_to_o3d(cloud_data, pcd);
+    open3d_ros::rosToOpen3d(cloud_data, pcd);
     // Do something with the Open3D pointcloud
 }
 

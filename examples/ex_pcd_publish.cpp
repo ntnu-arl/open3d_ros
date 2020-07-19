@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 
     while (ros::ok())
     {
-        open3d_ros::o3d_to_ros(o3d_pc, ros_pc2, "o3d_frame");
+        open3d_ros::open3dToRos(o3d_pc, ros_pc2, "o3d_frame");
         ros_pc2.header.stamp = ros::Time::now();
         pubCloud.publish(ros_pc2);
         ros::spinOnce();

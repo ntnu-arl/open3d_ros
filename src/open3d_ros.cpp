@@ -2,7 +2,7 @@
 
 namespace open3d_ros
 {
-void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id)
+void open3dToRos(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id)
 {
     sensor_msgs::PointCloud2Modifier modifier(ros_pc2);
     if (pointcloud.HasColors())
@@ -48,7 +48,7 @@ void o3d_to_ros(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::Poi
     }
 }
 
-void ros_to_o3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc, bool skip_colors)
+void rosToOpen3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc, bool skip_colors)
 {
     sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_x(*ros_pc2, "x");
     sensor_msgs::PointCloud2ConstIterator<float> ros_pc2_y(*ros_pc2, "y");

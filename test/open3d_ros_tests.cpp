@@ -1,21 +1,29 @@
+// GTest
 #include <gtest/gtest.h>
 
+//open3d_ros
 #include "open3d_ros/open3d_ros.h"
+
+// Open3D
 #include <open3d/Open3D.h>
+
+// ROS
 #include <sensor_msgs/PointCloud2.h>
+
+// Boost
 #include <boost/make_shared.hpp>
 
-TEST(Open3D_ROS, o3d_to_ros_to_o3d)
+TEST(ConversionFunctions, open3dToRos)
 {
     open3d::geometry::PointCloud o3d_pcd;
     open3d::geometry::PointCloud ros_o3d_pcd;
     sensor_msgs::PointCloud2 rospc2;
     open3d::io::ReadPointCloud("src/open3d_ros/data/fragment.pcd", o3d_pcd);
-    open3d_ros::o3d_to_ros(o3d_pcd, rospc2, "o3d_frame");
+    open3d_ros::open3dToRos(o3d_pcd, rospc2, "o3d_frame");
     EXPECT_EQ(rospc2.height*rospc2.width, o3d_pcd.points_.size());
     const sensor_msgs::PointCloud2ConstPtr &rospc2_ptr = boost::make_shared<sensor_msgs::PointCloud2>(rospc2);
     EXPECT_EQ(rospc2_ptr->height*rospc2_ptr->width, o3d_pcd.points_.size());
-    open3d_ros::ros_to_o3d(rospc2_ptr, ros_o3d_pcd);
+    open3d_ros::rosToOpen3d(rospc2_ptr, ros_o3d_pcd);
     for (unsigned int i = 0; i < o3d_pcd.points_.size(); i++)
     {
         const Eigen::Vector3d &point = o3d_pcd.points_[i];
@@ -34,7 +42,7 @@ TEST(Open3D_ROS, o3d_to_ros_to_o3d)
     }
 }
 
-TEST(Open3D_ROS_2, o3d_to_ros_to_o3d)
+TEST(ConversionFunctions, rosToOpen3d)
 {
     open3d::geometry::PointCloud o3d_pcd;
     open3d::geometry::PointCloud ros_o3d_pcd;
@@ -48,11 +56,11 @@ TEST(Open3D_ROS_2, o3d_to_ros_to_o3d)
     o3d_pcd.points_.push_back(Eigen::Vector3d(1.0, 0.0, 1.0));
     o3d_pcd.points_.push_back(Eigen::Vector3d(1.0, 1.0, 1.0));
 
-    open3d_ros::o3d_to_ros(o3d_pcd, rospc2, "o3d_frame");
+    open3d_ros::open3dToRos(o3d_pcd, rospc2, "o3d_frame");
     EXPECT_EQ(rospc2.height*rospc2.width, o3d_pcd.points_.size());
     const sensor_msgs::PointCloud2ConstPtr &rospc2_ptr = boost::make_shared<sensor_msgs::PointCloud2>(rospc2);
     EXPECT_EQ(rospc2_ptr->height*rospc2_ptr->width, o3d_pcd.points_.size());
-    open3d_ros::ros_to_o3d(rospc2_ptr, ros_o3d_pcd);
+    open3d_ros::rosToOpen3d(rospc2_ptr, ros_o3d_pcd);
     for (unsigned int i = 0; i < o3d_pcd.points_.size(); i++)
     {
         const Eigen::Vector3d &point = o3d_pcd.points_[i];
