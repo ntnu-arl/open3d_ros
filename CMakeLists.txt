@@ -29,27 +29,27 @@ include_directories(
 )
 
 # C++ library
-add_library(${PROJECT_NAME} src/open3d_ros.cpp)
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+add_library(open3d_ros src/open3d_ros.cpp)
+add_dependencies(open3d_ros ${open3d_ros_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(open3d_ros ${catkin_LIBRARIES})
 
 # Examples
 add_executable(subscriber_example examples/ex_pc2_subscribe.cpp)
-target_link_libraries(subscriber_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
+target_link_libraries(subscriber_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} open3d_ros)
 
 add_executable(publisher_example examples/ex_pcd_publish.cpp)
-target_link_libraries(publisher_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
+target_link_libraries(publisher_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} open3d_ros)
 
 add_executable(conversion_time examples/conv_time.cpp)
-target_link_libraries(conversion_time ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
+target_link_libraries(conversion_time ${catkin_LIBRARIES} ${Open3D_LIBRARIES} open3d_ros)
 
 # Install
-install(TARGETS ${PROJECT_NAME}
+install(TARGETS open3d_ros
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 
-install(DIRECTORY include/${PROJECT_NAME}/
+install(DIRECTORY include/open3d_ros/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
 install(TARGETS subscriber_example publisher_example conversion_time
@@ -60,7 +60,7 @@ install(DIRECTORY data/
 
 # Tests
 if (CATKIN_ENABLE_TESTING)
-  catkin_add_gtest(open3d_ros_tests test/open3d_ros_tests.cpp)
-  target_link_libraries(open3d_ros_tests ${PROJECT_NAME} ${catkin_LIBRARIES} ${Open3D_LIBRARIES})
+  catkin_add_gtest(test_open3d_ros test/open3d_ros_tests.cpp)
+  target_link_libraries(test_open3d_ros open3d_ros ${catkin_LIBRARIES} ${Open3D_LIBRARIES})
 endif()
 
