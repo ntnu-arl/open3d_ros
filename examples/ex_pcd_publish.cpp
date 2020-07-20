@@ -4,9 +4,13 @@
 // ROS
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <ros/package.h>
 
 // open3d_ros
 #include "open3d_ros/open3d_ros.h"
+
+// C++
+#include <string>
 
 int main(int argc, char** argv)
 {
@@ -18,7 +22,8 @@ int main(int argc, char** argv)
     // Example XYZRGB Pointcloud
     sensor_msgs::PointCloud2 ros_pc2;
     open3d::geometry::PointCloud o3d_pc;
-    open3d::io::ReadPointCloud("data/fragment.pcd", o3d_pc);
+    std::string path = ros::package::getPath("open3d_ros");
+    open3d::io::ReadPointCloud(path + "data/fragment.pcd", o3d_pc);
 
     while (ros::ok())
     {

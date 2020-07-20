@@ -11,12 +11,13 @@ find_package(Open3D REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
+  roslib
 )
 
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES open3d_ros
- CATKIN_DEPENDS roscpp sensor_msgs
+ CATKIN_DEPENDS roscpp sensor_msgs roslib
  DEPENDS Open3D
 )
 
