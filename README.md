@@ -1,6 +1,6 @@
 # open3d_ros
 
-This package is a standalone library that provides functions that can convert pointcloud messages from ROS to open3d and vice-versa.
+This package provides functions that can convert pointclouds from ROS to Open3D and vice-versa.
 
 ## Dependencies
 
@@ -38,6 +38,8 @@ sudo make install
 
 ### open3d_ros
 
+#### From Source
+
 ```bash
 mkdir -p catkin_ws/src
 cd catkin_ws/src
@@ -56,12 +58,14 @@ There are two functions provided in this library:
 ```cpp
 void open3d_ros::open3dToRos(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id = "open3d_pointcloud");
 
-void open3d_ros::rosToOpen3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc,bool skip_colors=false);
+void open3d_ros::rosToOpen3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc, bool skip_colors=false);
 ```
 
 Their usage can be seen in [`examples/ex_pc2_subscribe.cpp`](examples/ex_pc2_subscribe.cpp) and [`examples/ex_pcd_publish.cpp`](examples/ex_pcd_publish.cpp)
 
-* As Open3D pointclouds only contain `points`, `colors` and `normals`, the interface currently only supports XYZ and XYZRGB pointclouds.
-* On creating a ROS pointcloud from an Open3D pointcloud it is the user's responsibility to set the timestamp in the header and pass the `frame_id` to the conversion function.
+* As Open3D pointclouds only contain `points`, `colors` and `normals`, the interface currently supports XYZ, XYZRGB pointclouds. XYZI pointclouds are handled by placing the `intensity` value in the `colors_`.
+* On creating a ROS pointcloud from an Open3D pointcloud, the user is expected to set the timestamp in the header and pass the `frame_id` to the conversion function.
 
-Documentation can be generated using Doxygen and the configuration file by executing  ```doxygen Doxyfile```
+## Documentation
+
+Documentation can be generated using Doxygen and the configuration file by executing  `doxygen Doxyfile` in the package.
