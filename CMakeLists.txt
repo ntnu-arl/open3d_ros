@@ -1,60 +1,65 @@
 cmake_minimum_required(VERSION 3.1)
 project(open3d_ros)
-set (CMAKE_CXX_STANDARD 14)
+
+add_compile_options(-std=c++14)
+set(CMAKE_BUILD_TYPE Release)
+
+# System Dependancies
+find_package(Eigen3 REQUIRED)
+find_package(Open3D REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
 )
 
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
-
-find_package(Open3D REQUIRED)
-include_directories(${OPEN3D_INCLUDE_DIR})
-
-list(APPEND Open3D_LIBRARIES dl)
-message(STATUS "Found Open3D ${Open3D_VERSION}")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${Open3D_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Open3D_CXX_FLAGS}")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${Open3D_EXE_LINKER_FLAGS}")
-
-include_directories(${Open3D_LIBRARY_DIRS})
-
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES open3d_ros
-#  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs
-#  DEPENDS system_lib
+ CATKIN_DEPENDS roscpp sensor_msgs
+ DEPENDS Open3D
 )
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIR}
+  ${Open3D_INCLUDE_DIRS}
 )
 
-## Declare a C++ library
-add_library(${PROJECT_NAME}
-  src/open3d_ros.cpp
-)
-
+# C++ library
+add_library(${PROJECT_NAME} src/open3d_ros.cpp)
 add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME}
-  ${catkin_LIBRARIES}
-)
-
+# Examples
 add_executable(subscriber_example examples/ex_pc2_subscribe.cpp)
 target_link_libraries(subscriber_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
-target_include_directories(subscriber_example PUBLIC ${Open3D_INCLUDE_DIRS})
 
 add_executable(publisher_example examples/ex_pcd_publish.cpp)
 target_link_libraries(publisher_example ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
-target_include_directories(publisher_example PUBLIC ${Open3D_INCLUDE_DIRS})
 
 add_executable(conversion_time examples/conv_time.cpp)
 target_link_libraries(conversion_time ${catkin_LIBRARIES} ${Open3D_LIBRARIES} ${PROJECT_NAME})
-target_include_directories(conversion_time PUBLIC ${Open3D_INCLUDE_DIRS})
 
-catkin_add_gtest(o3d_ros_tests test/o3d_ros_tests.cpp)
-target_link_libraries(o3d_ros_tests ${PROJECT_NAME} ${catkin_LIBRARIES} ${Open3D_LIBRARIES})
+# Install
+install(TARGETS ${PROJECT_NAME}
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
+
+install(DIRECTORY include/${PROJECT_NAME}/
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+
+install(TARGETS subscriber_example publisher_example conversion_time
+        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(DIRECTORY data/
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/data)
+
+# Tests
+if (CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(open3d_ros_tests test/open3d_ros_tests.cpp)
+  target_link_libraries(open3d_ros_tests ${PROJECT_NAME} ${catkin_LIBRARIES} ${Open3D_LIBRARIES})
+endif()
+
