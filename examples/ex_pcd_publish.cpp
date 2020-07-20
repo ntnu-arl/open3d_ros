@@ -23,11 +23,10 @@ int main(int argc, char** argv)
     sensor_msgs::PointCloud2 ros_pc2;
     open3d::geometry::PointCloud o3d_pc;
     std::string path = ros::package::getPath("open3d_ros");
-    open3d::io::ReadPointCloud(path + "data/fragment.pcd", o3d_pc);
-
+    open3d::io::ReadPointCloud(path + "/data/fragment.pcd", o3d_pc);
+    open3d_ros::open3dToRos(o3d_pc, ros_pc2, "o3d_frame");
     while (ros::ok())
     {
-        open3d_ros::open3dToRos(o3d_pc, ros_pc2, "o3d_frame");
         ros_pc2.header.stamp = ros::Time::now();
         pubCloud.publish(ros_pc2);
         ros::spinOnce();
