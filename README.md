@@ -9,7 +9,7 @@ This package provides functions that can convert pointclouds from ROS to Open3D 
 
 ## System Requirements
 
-* Ubuntu 18.04+: GCC 5+, Clang 7+
+* Ubuntu 18.04+: GCC 5+
 
 ## Installation
 
