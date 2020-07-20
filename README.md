@@ -69,3 +69,11 @@ Their usage can be seen in [`examples/ex_pc2_subscribe.cpp`](examples/ex_pc2_sub
 ## Documentation
 
 Documentation can be generated using Doxygen and the configuration file by executing  `doxygen Doxyfile` in the package.
+
+## Contact
+
+Feel free to contact us for any questions:
+
+* [Pranay Mathur](mailto:matnay17@gmail.com)
+* [Nikhil Khedekar](mailto:nkhedekar@nevada.unr.edu)
+* [Kostas Alexis](mailto:kalexis@unr.edu)
