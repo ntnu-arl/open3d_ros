@@ -25,8 +25,8 @@ make -j4
 sudo make install
 ```
 
-* You can change the install location using `-DCMAKE_INSTALL_PREFIX=<open3d_install_directory>` when running `cmake` after which you would run `make install`
-* You may need to upgrade `cmake`
+* You can change the install location using `cmake .. -DCMAKE_INSTALL_PREFIX=<open3d_install_directory>` instead
+* You may need to upgrade `cmake` on your system. This can be done as follows
 
     ```bash
     sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
