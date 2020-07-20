@@ -1,18 +1,67 @@
 # open3d_ros
 
-Simply put: A ROS interface for open3d.
-
 This package is a standalone library that provides functions that can convert pointcloud messages from ROS to open3d and vice-versa.
+
+## Dependencies
+
+* Eigen3
+* Open3D
+
+## System Requirements
+
+* Ubuntu 18.04+: GCC 5+, Clang 7+
+
+## Installation
+
+### Open3D
+
+```bash
+git clone --recursive https://github.com/intel-isl/Open3D
+cd Open3d && source util/scripts/install-deps-ubuntu.sh
+mkdir build && cd build
+cmake -DBUILD_EIGEN3=ON -DBUILD_GLEW=ON -DBUILD_GLFW=ON -DBUILD_JSONCPP=ON -DBUILD_PNG=ON -DGLIBCXX_USE_CXX11_ABI=ON -DPYTHON_EXECUTABLE=/usr/bin/python ..
+make -j4
+# Optionally install system wide to /usr/local/
+sudo make install
+```
+
+* You can change the install location using `-DCMAKE_INSTALL_PREFIX=<open3d_install_directory>` when running `cmake` after which you would run `make install`
+* You may need to upgrade `cmake`
+
+    ```bash
+    sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+    sudo apt-get update
+    sudo apt-get install cmake
+    ```
+
+* These instructions for installation are compiled from the [official instructions](http://www.open3d.org/docs/release/compilation.html) and [this github issue](https://github.com/intel-isl/Open3D/issues/414).
+
+### open3d_ros
+
+```bash
+mkdir -p catkin_ws/src
+cd catkin_ws/src
+git clone git@github.com:unr-arl/open3d_ros.git
+cd ..
+catkin config -DCMAKE_BUILD_TYPE=Release
+catkin build open3d_ros
+```
+
+* Time taken for the conversion functions will be much larger if the package is not built in `Release` mode.
 
 ## Usage
 
-There are 2 major functions provided in this library:
+There are two functions provided in this library:
 
-```python
-ros_to_o3d(ros_pc2)
-o3d_to_ros(o3d_pc)
+```cpp
+void open3d_ros::open3dToRos(const open3d::geometry::PointCloud& pointcloud, sensor_msgs::PointCloud2& ros_pc2, std::string frame_id = "open3d_pointcloud");
+
+void open3d_ros::rosToOpen3d(const sensor_msgs::PointCloud2ConstPtr& ros_pc2, open3d::geometry::PointCloud& o3d_pc,bool skip_colors=false);
 ```
 
-## Note: This interface currently only supports XYZI, XYZIR and XYZRGB
+Their usage can be seen in [`examples/ex_pc2_subscribe.cpp`](examples/ex_pc2_subscribe.cpp) and [`examples/ex_pcd_publish.cpp`](examples/ex_pcd_publish.cpp)
 
-## Note: On creating a ros pointcloud from an open3d pointcloud it is the user's responsibility to set the timestamp. It is also expected that you would need to pass in the frame id
+* As Open3D pointclouds only contain `points`, `colors` and `normals`, the interface currently only supports XYZ and XYZRGB pointclouds.
+* On creating a ROS pointcloud from an Open3D pointcloud it is the user's responsibility to set the timestamp in the header and pass the `frame_id` to the conversion function.
+
+Documentation can be generated using Doxygen and the configuration file by executing  ```doxygen Doxyfile```
