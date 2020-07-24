@@ -31,7 +31,7 @@ include_directories(
 # C++ library
 add_library(open3d_ros src/open3d_ros.cpp)
 add_dependencies(open3d_ros ${open3d_ros_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(open3d_ros ${catkin_LIBRARIES})
+target_link_libraries(open3d_ros ${catkin_LIBRARIES} ${Open3D_LIBRARIES})
 
 # Examples
 add_executable(subscriber_example examples/ex_pc2_subscribe.cpp)
