@@ -19,13 +19,11 @@ This package provides functions that can convert pointclouds from ROS to Open3D 
 git clone --recursive https://github.com/intel-isl/Open3D
 cd Open3D && source util/scripts/install-deps-ubuntu.sh
 mkdir build && cd build
-cmake -DBUILD_EIGEN3=ON -DBUILD_GLEW=ON -DBUILD_GLFW=ON -DBUILD_JSONCPP=ON -DBUILD_PNG=ON -DGLIBCXX_USE_CXX11_ABI=ON -DPYTHON_EXECUTABLE=/usr/bin/python ..
+cmake -DBUILD_EIGEN3=ON -DBUILD_GLEW=ON -DBUILD_GLFW=ON -DBUILD_JSONCPP=ON -DBUILD_PNG=ON -DGLIBCXX_USE_CXX11_ABI=ON -DPYTHON_EXECUTABLE=/usr/bin/python -DBUILD_UNIT_TESTS=ON ..
 make -j4
-# Optionally install system wide to /usr/local/
 sudo make install
 ```
 
-* You can change the install location using `cmake .. -DCMAKE_INSTALL_PREFIX=<open3d_install_directory>` instead
 * You may need to upgrade `cmake` on your system. This can be done as follows
 
     ```bash
