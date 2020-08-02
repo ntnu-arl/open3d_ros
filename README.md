@@ -1,3 +1,9 @@
+# This repository has been moved to a ROS repository at [ros-perception/perception_open3d](https://github.com/ros-perception/perception_open3d) and will be archived on August 9 2020. All users are requested to switch to using the new repository.
+
+Please note the change in the namespace of the functions to open3d_conversions in the new repository from open3d_ros in this repository.
+
+Refer [#6](https://github.com/unr-arl/open3d_ros/issues/6) and [#7](https://github.com/unr-arl/open3d_ros/issues/7)
+
 # open3d_ros
 
 This package provides functions that can convert pointclouds from ROS to Open3D and vice-versa.
