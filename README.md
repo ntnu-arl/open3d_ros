@@ -1,4 +1,4 @@
-# This repository has been moved to a ROS repository at [ros-perception/perception_open3d](https://github.com/ros-perception/perception_open3d) and will be archived on August 9 2020. All users are requested to switch to using the new repository.
+# This repository has been moved to a ROS repository at [ros-perception/perception_open3d](https://github.com/ros-perception/perception_open3d). All users are requested to switch to using the new repository.
 
 Please note the change in the namespace of the functions to `open3d_conversions` in the new repository from `open3d_ros` in this repository.
 
